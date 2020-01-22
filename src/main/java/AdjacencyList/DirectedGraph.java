@@ -129,7 +129,7 @@ public class DirectedGraph<A extends DirectedNode> extends AbstractListGraph<A> 
 			for (DirectedNode sn : n.getSuccs().keySet()) {
 				A snToA = makeNode(sn.getLabel());
 				g.addArc(g.getNodeOfList(snToA), g.getNodeOfList(n));
-				g.removeArc(g.getNodeOfList(snToA), g.getNodeOfList(n));
+				g.removeArc(g.getNodeOfList(n), g.getNodeOfList(snToA));
 			}
 		}
 		return g;
@@ -154,6 +154,10 @@ public class DirectedGraph<A extends DirectedNode> extends AbstractListGraph<A> 
 		GraphTools.afficherMatrix(Matrix);
 		DirectedGraph al = new DirectedGraph(Matrix);
 		System.out.println(al);
-		System.out.println(al.isArc(new DirectedNode(0), new DirectedNode(3)));
+        al.removeArc(new DirectedNode(0), new DirectedNode(3));
+        System.out.println(al);
+        al.addArc(new DirectedNode(0), new DirectedNode(3));
+        System.out.println(al);
+        System.out.println(al.computeInverse());
 	}
 }
