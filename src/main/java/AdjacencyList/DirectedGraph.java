@@ -7,6 +7,7 @@ import Abstraction.AbstractListGraph;
 import GraphAlgorithms.GraphTools;
 import Nodes.DirectedNode;
 import Abstraction.IDirectedGraph;
+import Nodes.UndirectedNode;
 
 public class DirectedGraph<A extends DirectedNode> extends AbstractListGraph<A> implements IDirectedGraph<A> {
 
@@ -69,18 +70,20 @@ public class DirectedGraph<A extends DirectedNode> extends AbstractListGraph<A> 
 
     @Override
     public boolean isArc(A from, A to) {
-    	// A completer
-    	return false;
+        return getNodeOfList(from).getSuccs().containsKey(getNodeOfList(to));
     }
 
     @Override
     public void removeArc(A from, A to) {
-    	// A completer
+    	if(isArc(from,to))
+    	    getNodeOfList(from).getSuccs().remove(getNodeOfList(to));
     }
 
     @Override
     public void addArc(A from, A to) {
-    	// A completer
+	    if(!isArc(from,to)) {
+	        getNodeOfList(from).getSuccs().put(to, 0);
+        }
     }
 
     //--------------------------------------------------
@@ -122,7 +125,12 @@ public class DirectedGraph<A extends DirectedNode> extends AbstractListGraph<A> 
     @Override
     public IDirectedGraph computeInverse() {
         DirectedGraph<A> g = new DirectedGraph<>(this);
-        // A completer
+        for(DirectedNode n: nodes) {
+            for (DirectedNode sn: n.getSuccs().keySet()) {
+                g.addArc(sn, n);
+                g.removeArc(n, sn);
+            }
+        }
         return g;
     }
     
@@ -145,6 +153,6 @@ public class DirectedGraph<A extends DirectedNode> extends AbstractListGraph<A> 
         GraphTools.afficherMatrix(Matrix);
         DirectedGraph al = new DirectedGraph(Matrix);
         System.out.println(al);
-        // A completer
+        System.out.println(al.isArc(new DirectedNode(0), new DirectedNode(3)));
     }
 }
