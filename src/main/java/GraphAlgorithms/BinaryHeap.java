@@ -1,6 +1,8 @@
 package GraphAlgorithms;
 
 
+import java.util.NoSuchElementException;
+
 public class BinaryHeap {
 
     private int[] nodes;
@@ -28,7 +30,30 @@ public class BinaryHeap {
     }
 
     public void insert(int element) {
-    	// A completer
+    	if(this.pos == nodes.length)
+    	    throw new NoSuchElementException("Heap is full, there's no space to insert new element");
+    	//if()
+    	nodes[pos++] = element;
+    }
+
+    public int getLeftChild(int src) {
+        return nodes[2*src + 1];
+    }
+
+    public int getRightChild(int src) {
+        return nodes[2*src + 2];
+    }
+
+    public int getParent(int src) {
+        return nodes[src/2];
+    }
+
+    public void heapify() {
+        //if(getParent(src) >= )
+        //int parent = pos/2;
+        /*for(int i = pos; i > 0; i--) {
+            if
+        }*/
     }
 
     public int remove() {
@@ -53,8 +78,7 @@ public class BinaryHeap {
 	 * 
 	 */	
     private boolean isLeaf(int src) {
-    	// A completer
-    	return false;
+        return nodes[getLeftChild(src)] == Integer.MAX_VALUE && nodes[getRightChild(src)] == Integer.MAX_VALUE;
     }
 
     private void swap(int father, int child) {
@@ -98,6 +122,8 @@ public class BinaryHeap {
     public static void main(String[] args) {
         BinaryHeap jarjarBin = new BinaryHeap();
         System.out.println(jarjarBin.isEmpty()+"\n");
+        System.out.println(jarjarBin.isLeaf(0));
+        System.out.println(jarjarBin.nodes[0] + " " + jarjarBin.nodes[1] + " " + jarjarBin.nodes[2] + " ");
         int k = 20;
         int m = k;
         int min = 2;
